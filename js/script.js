@@ -73,10 +73,10 @@ function updateToggleButtonText() {
   }
   
   // Atualizar ícone
-  const icon = playerToggle.querySelector('i');
-  if (icon) {
-    icon.className = isPlayerHidden ? 'fas fa-chevron-up' : 'fas fa-chevron-down';
-  }
+//   const icon = playerToggle.querySelector('i');
+//   if (icon) {
+//     icon.className = isPlayerHidden ? 'fas fa-chevron-up' : 'fas fa-chevron-down';
+//   }
 }
 
 // Ajustar padding do conteúdo principal

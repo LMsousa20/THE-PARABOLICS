@@ -44,7 +44,7 @@ body {
 
 .sidebar-logo h1 {
   font-family: 'Orbitron', sans-serif;
-  font-size: 1.8rem;
+  font-size: 150%;
   background: linear-gradient(90deg, #ff416c, #ff4b2b);
   -webkit-background-clip: text;
   background-clip: text;
@@ -508,10 +508,13 @@ body {
   background: transparent;
   border: 2px solid #ff416c;
   color: #ff416c;
+  padding: 12px 25px;
+  border-radius: 12px;
 }
 
 .btn-outline:hover {
-  background: rgba(255, 65, 108, 0.1);
+  background: rgba(255, 65, 109, 0.479);
+  color: #ffffff;
 }
 
 /* Barra inferior com player */
@@ -520,14 +523,13 @@ body {
   bottom: 0;
   left: 250px;
   right: 0;
-  background: rgba(20, 20, 30, 0.97);
-  backdrop-filter: blur(15px);
-  padding: 0;
+  background: rgba(255, 255, 255, 0);
+  /* backdrop-filter: blur(15px); */
+  padding: 10px;
   z-index: 90;
-  border-top: 2px solid rgba(255, 65, 108, 0.5);
-  box-shadow: 0 -5px 25px rgba(0, 0, 0, 0.5);
+  border-top: 2px solid rgba(255, 65, 109, 0);
+  /* box-shadow: 0 -5px 25px rgba(0, 0, 0, 0.5); */
   transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.1);
-  height: 150px;
   transform: translateY(0);
 }
 
