@@ -1,0 +1,1126 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>The Parabolics - Banda de Rock Alternativo</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Orbitron:wght@400;600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: #0a0a10;
+            color: #f5f5f5;
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Sidebar lateral */
+        .sidebar {
+            width: 250px;
+            background: rgba(20, 20, 30, 0.95);
+            backdrop-filter: blur(10px);
+            border-right: 1px solid #ff416c40;
+            padding: 30px 20px;
+            position: fixed;
+            height: 100vh;
+            z-index: 100;
+            overflow-y: auto;
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.1);
+        }
+
+        .sidebar-logo {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .sidebar-logo h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.8rem;
+            background: linear-gradient(90deg, #ff416c, #ff4b2b);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            letter-spacing: 3px;
+            margin-bottom: 10px;
+        }
+
+        .sidebar-logo p {
+            color: #aaa;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+        }
+
+        .sidebar-nav {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 40px;
+        }
+
+        .sidebar-nav a {
+            color: #ddd;
+            text-decoration: none;
+            padding: 14px 18px;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .sidebar-nav a i {
+            width: 20px;
+            text-align: center;
+        }
+
+        .sidebar-nav a:hover {
+            background: rgba(255, 65, 108, 0.15);
+            color: #ff416c;
+            transform: translateX(5px);
+        }
+
+        .sidebar-nav a.active {
+            background: linear-gradient(90deg, rgba(255, 65, 108, 0.3), rgba(255, 75, 43, 0.2));
+            color: #ff416c;
+            border-left: 4px solid #ff4b2b;
+        }
+
+        .social-sidebar {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .social-sidebar a {
+            color: #bbb;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+
+        .social-sidebar a:hover {
+            color: #ff416c;
+            transform: translateY(-3px);
+        }
+
+        /* Conteúdo principal */
+        .main-content {
+            flex: 1;
+            margin-left: 250px;
+            padding: 30px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Background com gradiente animado */
+        .bg-animated {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .gradient-bg {
+            position: absolute;
+            width: 150%;
+            height: 150%;
+            top: -25%;
+            left: -25%;
+            background: radial-gradient(circle at 30% 30%, rgba(255, 65, 108, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 70% 70%, rgba(255, 75, 43, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 50% 20%, rgba(30, 30, 50, 0.8) 0%, transparent 50%);
+            animation: rotate 40s linear infinite;
+        }
+
+        @keyframes rotate {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 40px 0 60px;
+            position: relative;
+        }
+
+        .hero h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            background: linear-gradient(90deg, #ff416c, #ff4b2b);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            letter-spacing: 3px;
+            text-shadow: 0 0 20px rgba(255, 65, 108, 0.3);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 30px;
+            color: #bbb;
+            line-height: 1.6;
+        }
+
+        .hero-tag {
+            display: inline-block;
+            background: rgba(255, 65, 108, 0.2);
+            color: #ff416c;
+            padding: 8px 20px;
+            border-radius: 30px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            border: 1px solid rgba(255, 65, 108, 0.4);
+        }
+
+        /* Seções com cards laterais */
+        .section-container {
+            display: grid;
+            grid-template-columns: 1fr 350px;
+            gap: 30px;
+            margin-bottom: 50px;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .section-container.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .section-main {
+            background: rgba(20, 20, 30, 0.8);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 35px;
+            border: 1px solid rgba(255, 65, 108, 0.2);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .section-sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .side-card {
+            background: rgba(27, 27, 34, 0.9);
+            border-radius: 15px;
+            padding: 25px;
+            border: 1px solid rgba(255, 75, 43, 0.2);
+            transition: all 0.4s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .side-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(255, 75, 43, 0.5);
+            box-shadow: 0 8px 25px rgba(255, 75, 43, 0.15);
+        }
+
+        .side-card h3 {
+            color: #ff4b2b;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .side-card p {
+            color: #ccc;
+            line-height: 1.5;
+            font-size: 0.95rem;
+        }
+
+        /* Títulos das seções */
+        .section-title {
+            color: #ff416c;
+            margin-bottom: 25px;
+            font-size: 2.2rem;
+            position: relative;
+            padding-bottom: 12px;
+            font-weight: 700;
+        }
+
+        .section-title:after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(90deg, #ff416c, #ff4b2b);
+            border-radius: 2px;
+        }
+
+        /* Cards de membros */
+        .members-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .member-card {
+            background: rgba(27, 27, 34, 0.9);
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            transition: all 0.4s ease;
+            border: 1px solid rgba(255, 65, 108, 0.1);
+        }
+
+        .member-card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(255, 65, 108, 0.5);
+            box-shadow: 0 10px 25px rgba(255, 65, 108, 0.2);
+        }
+
+        .member-icon {
+            font-size: 2.5rem;
+            color: #ff4b2b;
+            margin-bottom: 15px;
+        }
+
+        .member-card h3 {
+            color: #ff416c;
+            margin-bottom: 10px;
+        }
+
+        /* Player de música */
+        .music-player {
+            background: rgba(20, 20, 30, 0.9);
+            border-radius: 20px;
+            padding: 30px;
+            margin-top: 30px;
+            border: 1px solid rgba(255, 65, 108, 0.2);
+        }
+
+        .player-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .player-header h3 {
+            color: #ff416c;
+            font-size: 1.5rem;
+        }
+
+        .spotify-btn {
+            background: linear-gradient(90deg, #ff416c, #ff4b2b);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .spotify-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(255, 65, 108, 0.4);
+        }
+
+        /* Agenda */
+        .agenda-list {
+            margin-top: 20px;
+        }
+
+        .agenda-item {
+            background: rgba(27, 27, 34, 0.7);
+            border-radius: 12px;
+            padding: 18px;
+            margin-bottom: 15px;
+            border-left: 4px solid #ff4b2b;
+            transition: all 0.3s ease;
+        }
+
+        .agenda-item:hover {
+            background: rgba(27, 27, 34, 0.9);
+            transform: translateX(5px);
+        }
+
+        .agenda-date {
+            color: #ff416c;
+            font-weight: 600;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        /* Newsletter */
+        .newsletter-box {
+            background: linear-gradient(135deg, rgba(255, 65, 108, 0.1), rgba(255, 75, 43, 0.1));
+            border-radius: 20px;
+            padding: 35px;
+            text-align: center;
+            margin-top: 40px;
+            border: 1px solid rgba(255, 65, 108, 0.3);
+        }
+
+        .newsletter-box h3 {
+            color: #ff416c;
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+        }
+
+        .newsletter-input {
+            display: flex;
+            max-width: 500px;
+            margin: 0 auto;
+            gap: 10px;
+        }
+
+        .newsletter-input input {
+            flex: 1;
+            padding: 15px 20px;
+            border-radius: 30px;
+            border: 2px solid rgba(255, 65, 108, 0.3);
+            background: rgba(20, 20, 30, 0.8);
+            color: white;
+            font-size: 1rem;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .newsletter-input input:focus {
+            border-color: #ff416c;
+            box-shadow: 0 0 0 3px rgba(255, 65, 108, 0.2);
+        }
+
+        .newsletter-input button {
+            background: linear-gradient(90deg, #ff416c, #ff4b2b);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .newsletter-input button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(255, 65, 108, 0.4);
+        }
+
+        /* Barra inferior */
+        .bottom-bar {
+            position: fixed;
+            bottom: 0;
+            left: 250px;
+            right: 0;
+            background: rgba(20, 20, 30, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 5px 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid rgba(255, 65, 108, 0.3);
+            z-index: 90;
+        }
+
+        .now-playing {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .now-playing img {
+            width: 50px;
+            height: 50px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 65, 108, 0.4);
+        }
+
+        .track-info h4 {
+            color: #ff416c;
+            font-size: 1rem;
+        }
+
+        .track-info p {
+            color: #bbb;
+            font-size: 0.9rem;
+        }
+
+        .player-controls {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .player-controls button {
+            background: transparent;
+            border: none;
+            color: #ff416c;
+            font-size: 1.3rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .player-controls button:hover {
+            color: white;
+            transform: scale(1.2);
+        }
+
+        .progress-bar {
+            width: 200px;
+            height: 5px;
+            background: rgba(255, 65, 108, 0.2);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .progress {
+            height: 100%;
+            background: linear-gradient(90deg, #ff416c, #ff4b2b);
+            width: 40%;
+        }
+
+        /* Botões gerais */
+        .btn {
+            background: linear-gradient(90deg, #ff416c, #ff4b2b);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 7px 20px rgba(255, 65, 108, 0.4);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid #ff416c;
+            color: #ff416c;
+        }
+
+        .btn-outline:hover {
+            background: rgba(255, 65, 108, 0.1);
+        }
+
+        /* Responsividade */
+        @media (max-width: 1200px) {
+            .section-container {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar {
+                transform: translateX(-100%);
+            }
+
+            .main-content {
+                margin-left: 0;
+            }
+
+            .bottom-bar {
+                left: 0;
+            }
+
+            .menu-toggle {
+                display: block;
+                position: fixed;
+                top: 20px;
+                left: 20px;
+                z-index: 101;
+                background: rgba(255, 65, 108, 0.9);
+                color: white;
+                border: none;
+                width: 50px;
+                height: 50px;
+                border-radius: 50%;
+                font-size: 1.5rem;
+                cursor: pointer;
+            }
+
+            .sidebar.open {
+                transform: translateX(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .members-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .newsletter-input {
+                flex-direction: column;
+            }
+
+            .bottom-bar {
+                flex-direction: column;
+                gap: 15px;
+                padding: 15px;
+            }
+        }
+
+        /* Animações de entrada */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            animation: fadeInUp 0.8s ease forwards;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Background animado -->
+    <div class="bg-animated">
+        <div class="gradient-bg"></div>
+    </div>
+
+    <!-- Sidebar lateral -->
+    <nav class="sidebar" id="sidebar">
+        <div class="sidebar-logo">
+            <h1>THE PARABOLICS</h1>
+            <p>FORTAL CITY</p>
+        </div>
+
+        <div class="sidebar-nav">
+            <a href="#music" class="active"><i class="fas fa-music"></i> Músicas</a>
+            <a href="#release"><i class="fas fa-newspaper"></i> Release</a>
+            <a href="#historia"><i class="fas fa-book"></i> História</a>
+            <a href="#hq"><i class="fas fa-comic"></i> Quadrinhos</a>
+            <a href="#agenda"><i class="fas fa-calendar-alt"></i> Agenda</a>
+            <a href="#loja"><i class="fas fa-shopping-bag"></i> Loja</a>
+            <a href="#contato"><i class="fas fa-envelope"></i> Contato</a>
+        </div>
+
+        <div class="social-sidebar">
+            <a href="https://www.instagram.com/the_parabolics/" target="_blank"><i class="fab fa-instagram"></i></a>
+            <a href="https://www.threads.com/@the_parabolics" target="_blank"><i class="fab fa-threads"></i></a>
+            <a href="#" target="_blank"><i class="fab fa-youtube"></i></a>
+            <a href="#" target="_blank"><i class="fas fa-guitar"></i></a>
+        </div>
+    </nav>
+
+    <!-- Conteúdo principal -->
+    <main class="main-content">
+        <!-- Hero Section -->
+        <section class="hero fade-in">
+            <h1>THE PARABOLICS</h1>
+            <p>Um quarteto musical que vive altas aventuras na Fortal City. Influenciados por The Beatles, Dire Straits,
+                Os Mutantes e The Cardigans, os Parabolics trabalham intensamente em busca do sonho de despontar para o
+                mercado da música.</p>
+            <span class="hero-tag">ROCK ALTERNATIVO • QUADRINHOS • AVENTURA</span>
+        </section>
+
+        <!-- Seção de Músicas -->
+        <div class="section-container visible" id="music">
+            <div class="section-main">
+                <h2 class="section-title">Ouça Nossas Músicas</h2>
+                <p>Descubra o som dos Parabolics em todas as plataformas digitais. Nossa música é uma viagem através de
+                    histórias em quadrinhos e melodias cativantes.</p>
+
+                <div class="music-player">
+                    <div class="player-header">
+                        <h3>Player Oficial</h3>
+                        <a href="https://open.spotify.com/intl-pt/artist/2n7wXfvjYETev94LH7MhL6?si=Q-5RD30qT9WHpRtoJj2W5A"
+                            target="_blank" class="spotify-btn">
+                            <i class="fab fa-spotify"></i> Ouvir no Spotify
+                        </a>
+                    </div>
+
+                
+                </div>
+            </div>
+
+            <div class="section-sidebar">
+                <div class="side-card">
+                    <h3><i class="fas fa-chart-line"></i> Top Faixas</h3>
+                    <p>• Aventura na Fortal City</p>
+                    <p>• Cidade dos Sonhos</p>
+                    <p>• Parabólica do Amor</p>
+                    <p>• Viagem no Tempo</p>
+                </div>
+
+                <div class="side-card">
+                    <h3><i class="fas fa-headphones-alt"></i> Próximo Single</h3>
+                    <p>Nosso próximo single "Conexão Parabólica" será lançado em abril de 2026. Fique ligado!</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Seção Release -->
+        <div class="section-container" id="release">
+            <div class="section-main">
+                <h2 class="section-title">Release da Banda</h2>
+                <p>Nicholas Panini, Nanda Rivera, Layla Maia e Murilo Viana formam o quarteto que vive altas aventuras
+                    na Fortal City do mundo dos quadrinhos.</p>
+
+                <p>Influenciados por bandas como The Beatles, Dire Straits, Os Mutantes e The Cardigans, os Parabolics
+                    trabalham intensamente em busca do sonho de despontar para o mercado da música.</p>
+
+                <p><em>Postado por The Parabolics</em></p>
+
+                <h3 style="color: #ff4b2b; margin-top: 30px;">Por trás dos personagens</h3>
+                <div class="members-grid">
+                    <div class="member-card">
+                        <div class="member-icon"><i class="fas fa-microphone-alt"></i></div>
+                        <h3>Cantores e Músicos</h3>
+                        <p>Vozes e instrumentos que dão vida às músicas dos Parabolics.</p>
+                    </div>
+
+                    <div class="member-card">
+                        <div class="member-icon"><i class="fas fa-music"></i></div>
+                        <h3>Compositores</h3>
+                        <p>Criadores das histórias musicais que encantam os fãs.</p>
+                    </div>
+
+                    <div class="member-card">
+                        <div class="member-icon"><i class="fas fa-paint-brush"></i></div>
+                        <h3>Ilustradores</h3>
+                        <p>Artistas que dão forma visual ao universo dos Parabolics.</p>
+                    </div>
+
+                    <div class="member-card">
+                        <div class="member-icon"><i class="fas fa-sliders-h"></i></div>
+                        <h3>Produção Musical</h3>
+                        <p>Profissionais que polem o som da banda para perfeição.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-sidebar">
+                <div class="side-card">
+                    <h3><i class="fas fa-lightbulb"></i> Curiosidade</h3>
+                    <p>O nome "Parabolics" surgiu da ideia de que a música, como uma parábola, conta histórias que
+                        transmitem mensagens profundas através de metáforas sonoras.</p>
+                </div>
+
+                <div class="side-card">
+                    <h3><i class="fas fa-users"></i> Fã-Clube</h3>
+                    <p>Junte-se aos "Parabolovers" e tenha acesso a conteúdos exclusivos, prévias de músicas e
+                        participações especiais.</p>
+                    <button class="btn" style="margin-top: 15px;">Entrar para o Fã-Clube</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Seção História -->
+        <div class="section-container" id="historia">
+            <div class="section-main">
+                <h2 class="section-title">História & Curiosidades</h2>
+                <p>Conheça a origem da banda, curiosidades dos bastidores e detalhes do universo de Fortal City. Aqui
+                    você poderá acompanhar toda a jornada dos Parabolics!</p>
+
+                <div style="background: rgba(27, 27, 34, 0.7); border-radius: 15px; padding: 25px; margin-top: 25px;">
+                    <h3 style="color: #ff416c; margin-bottom: 15px;">A Origem</h3>
+                    <p>Tudo começou em 2024, quando quatro amigos com paixão por música e quadrinhos decidiram unir suas
+                        habilidades para criar algo único. A Fortal City, uma metrópole fictícia cheia de mistérios,
+                        tornou-se o palco perfeito para suas aventuras musicais.</p>
+
+                    <h3 style="color: #ff416c; margin: 20px 0 15px;">O Universo Expandido</h3>
+                    <p>Além das músicas, os Parabolics criaram um universo completo com histórias em quadrinhos,
+                        webtoons e até um jogo em desenvolvimento. Cada música é um capítulo dessa grande saga.</p>
+                </div>
+            </div>
+
+            <div class="section-sidebar">
+                <div class="side-card">
+                    <h3><i class="fas fa-calendar-check"></i> Linha do Tempo</h3>
+                    <p>2024: Formação da banda</p>
+                    <p>2025: Primeiro EP lançado</p>
+                    <p>2026: Expansão para quadrinhos</p>
+                    <p>2027: Turnê nacional planejada</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Seção Quadrinhos -->
+        <div class="section-container" id="hq">
+            <div class="section-main">
+                <h2 class="section-title">Quadrinhos</h2>
+                <p>Leia as mini histórias da banda e acompanhe o lançamento das futuras webtoons exclusivas! O universo
+                    gráfico dos Parabolics expande as aventuras musicais para o mundo visual.</p>
+
+                <div style="display: flex; gap: 20px; margin-top: 30px; flex-wrap: wrap;">
+                    <div
+                        style="flex: 1; min-width: 250px; background: rgba(27, 27, 34, 0.8); border-radius: 15px; padding: 20px; text-align: center;">
+                        <h4 style="color: #ff416c; margin-bottom: 15px;">Edição #1</h4>
+                        <p>A origem dos Parabolics</p>
+                        <button class="btn" style="margin-top: 15px;">Ler Agora</button>
+                    </div>
+
+                    <div
+                        style="flex: 1; min-width: 250px; background: rgba(27, 27, 34, 0.8); border-radius: 15px; padding: 20px; text-align: center;">
+                        <h4 style="color: #ff416c; margin-bottom: 15px;">Edição #2</h4>
+                        <p>Ameaça na Fortal City</p>
+                        <button class="btn" style="margin-top: 15px;">Ler Agora</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-sidebar">
+                <div class="side-card">
+                    <h3><i class="fas fa-book-open"></i> Webtoon</h3>
+                    <p>Em breve: revista digital estilo Webtoon com animações e trilha sonora exclusiva!</p>
+                    <button class="btn-outline btn" style="margin-top: 15px;"
+                        onclick="alert('Webtoon em produção! 🚀')">Avisar-me do Lançamento</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Seção Agenda -->
+        <div class="section-container" id="agenda">
+            <div class="section-main">
+                <h2 class="section-title">Agenda de Shows</h2>
+                <p>Confira onde os Parabolics vão se apresentar e garanta seu ingresso para viver a experiência completa
+                    da banda ao vivo!</p>
+
+                <div class="agenda-list" id="agenda-list">
+                    <div class="agenda-item">
+                        <span class="agenda-date">15 ABRIL 2026</span>
+                        Fortal City Arena - Fortaleza, CE
+                    </div>
+                    <div class="agenda-item">
+                        <span class="agenda-date">22 MAIO 2026</span>
+                        Teatro Municipal - São Paulo, SP
+                    </div>
+                    <div class="agenda-item">
+                        <span class="agenda-date">10 JUNHO 2026</span>
+                        Arena da Amazônia - Manaus, AM
+                    </div>
+                </div>
+
+                <button class="btn" onclick="addShow()" style="margin-top: 20px;">
+                    <i class="fas fa-plus"></i> Adicionar Show (Admin)
+                </button>
+            </div>
+
+            <div class="section-sidebar">
+                <div class="side-card">
+                    <h3><i class="fas fa-ticket-alt"></i> Ingressos</h3>
+                    <p>Garanta seu ingresso para os próximos shows com descontos especiais para membros do fã-clube.</p>
+                    <button class="btn" style="margin-top: 15px;">Comprar Ingressos</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Newsletter -->
+        <div class="newsletter-box">
+            <h3>Receba Novidades Exclusivas</h3>
+            <p>Inscreva-se para receber conteúdos especiais, prévias de músicas e notícias antes de todo mundo!</p>
+
+            <div class="newsletter-input">
+                <input type="email" id="email" placeholder="Seu melhor e-mail" />
+                <button onclick="subscribe()">Cadastrar</button>
+            </div>
+        </div>
+
+        <!-- Seção Loja -->
+        <div class="section-container" id="loja">
+            <div class="section-main">
+                <h2 class="section-title">Lojinha Oficial</h2>
+                <p>Produtos exclusivos dos Parabolics! Mostre seu amor pela banda com nossos produtos oficiais.</p>
+
+                <div
+                    style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px; margin-top: 30px;">
+                    <div
+                        style="background: rgba(27, 27, 34, 0.8); border-radius: 15px; padding: 20px; text-align: center;">
+                        <div style="font-size: 2rem; color: #ff416c; margin-bottom: 10px;"><i class="fas fa-tshirt"></i>
+                        </div>
+                        <h4 style="color: #ff4b2b;">Camisetas</h4>
+                        <p style="font-size: 0.9rem;">Estampas exclusivas</p>
+                    </div>
+
+                    <div
+                        style="background: rgba(27, 27, 34, 0.8); border-radius: 15px; padding: 20px; text-align: center;">
+                        <div style="font-size: 2rem; color: #ff416c; margin-bottom: 10px;"><i class="fas fa-book"></i>
+                        </div>
+                        <h4 style="color: #ff4b2b;">HQs</h4>
+                        <p style="font-size: 0.9rem;">Coleção completa</p>
+                    </div>
+
+                    <div
+                        style="background: rgba(27, 27, 34, 0.8); border-radius: 15px; padding: 20px; text-align: center;">
+                        <div style="font-size: 2rem; color: #ff416c; margin-bottom: 10px;"><i
+                                class="fas fa-compact-disc"></i></div>
+                        <h4 style="color: #ff4b2b;">Discos</h4>
+                        <p style="font-size: 0.9rem;">Edições limitadas</p>
+                    </div>
+
+                    <div
+                        style="background: rgba(27, 27, 34, 0.8); border-radius: 15px; padding: 20px; text-align: center;">
+                        <div style="font-size: 2rem; color: #ff416c; margin-bottom: 10px;"><i
+                                class="fas fa-puzzle-piece"></i></div>
+                        <h4 style="color: #ff4b2b;">Acessórios</h4>
+                        <p style="font-size: 0.9rem;">Itens colecionáveis</p>
+                    </div>
+                </div>
+
+                <div style="text-align: center; margin-top: 30px;">
+                    <button class="btn" onclick="alert('Loja em construção 🚧\nVolte em breve para nossas novidades!')">
+                        <i class="fas fa-shopping-cart"></i> Visitar Loja Completa
+                    </button>
+                </div>
+            </div>
+
+            <div class="section-sidebar">
+                <div class="side-card">
+                    <h3><i class="fas fa-gift"></i> Próximos Lançamentos</h3>
+                    <p>Em breve na loja: action figures dos personagens, pôsteres glow-in-the-dark e vinis coloridos das
+                        músicas!</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Seção Contato -->
+        <div class="section-container" id="contato">
+            <div class="section-main">
+                <h2 class="section-title">Contato para Shows</h2>
+                <p>Quer levar os Parabolics para sua cidade? Entre em contato com nossa equipe para agendar
+                    apresentações, parcerias e muito mais.</p>
+
+                <div style="margin-top: 25px;">
+                    <p><i class="fas fa-envelope" style="color: #ff416c; margin-right: 10px;"></i> Email:
+                        contato@theparabolics.com</p>
+                    <p><i class="fas fa-phone" style="color: #ff416c; margin-right: 10px;"></i> Telefone: (85)
+                        99999-9999</p>
+                    <p><i class="fas fa-map-marker-alt" style="color: #ff416c; margin-right: 10px;"></i> Endereço:
+                        Fortal City, CE - Brasil</p>
+                </div>
+
+                <div class="social" style="margin-top: 30px;">
+                    <h3 style="color: #ff4b2b; margin-bottom: 15px;">Redes Sociais</h3>
+                    <div style="display: flex; flex-wrap: wrap; gap: 15px;">
+                        <a href="https://www.instagram.com/the_parabolics/" target="_blank" class="btn-outline"
+                            style="text-decoration: none;">
+                            <i class="fab fa-instagram"></i> Instagram
+                        </a>
+                        <a href="https://www.threads.com/@the_parabolics" target="_blank" class="btn-outline"
+                            style="text-decoration: none;">
+                            <i class="fab fa-threads"></i> Threads
+                        </a>
+                        <a href="#" target="_blank" class="btn-outline" style="text-decoration: none;">
+                            <i class="fab fa-youtube"></i> YouTube
+                        </a>
+                        <a href="#" target="_blank" class="btn-outline" style="text-decoration: none;">
+                            <i class="fas fa-guitar"></i> Letras.com
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-sidebar">
+                <div class="side-card">
+                    <h3><i class="fas fa-question-circle"></i> Perguntas Frequentes</h3>
+                    <p><strong>Como adquirir ingressos?</strong><br>Diretamente no site ou nas casas de show.</p>
+                    <p><strong>A banda viaja para shows?</strong><br>Sim, para todo o Brasil e planejamos internacional.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer
+            style="text-align: center; padding: 40px 0; margin-top: 50px; border-top: 1px solid rgba(255, 65, 108, 0.2);">
+            <p>© 2026 The Parabolics - Todos os direitos reservados</p>
+            <p style="color: #aaa; font-size: 0.9rem; margin-top: 10px;">Fortal City - Um universo de música e aventura
+            </p>
+        </footer>
+    </main>
+
+    <!-- Barra inferior -->
+    <div class="bottom-bar">
+
+        <iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/artist/2n7wXfvjYETev94LH7MhL6?utm_source=generator" 
+        width="100%" height="152"
+         frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+        <!-- <div class="now-playing">
+            <div
+                style="width: 50px; height: 50px; background: linear-gradient(135deg, #ff416c, #ff4b2b); border-radius: 8px; display: flex; align-items: center; justify-content: center;">
+                <i class="fas fa-music"></i>
+            </div>
+            <div class="track-info">
+                <h4>Aventura na Fortal City</h4>
+                <p>The Parabolics - Single 2025</p>
+            </div>
+        </div>
+
+        <div class="player-controls">
+            <button><i class="fas fa-step-backward"></i></button>
+            <button><i class="fas fa-play"></i></button>
+            <button><i class="fas fa-step-forward"></i></button>
+            <div class="progress-bar">
+                <div class="progress"></div>
+            </div>
+            <button><i class="fas fa-volume-up"></i></button>
+        </div> -->
+    </div>
+
+    <!-- Botão de menu para mobile -->
+    <button class="menu-toggle" id="menuToggle" style="display: none;">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <script>
+        // Dados da agenda
+        const agenda = [
+            { date: "15 ABRIL 2026", place: "Fortal City Arena - Fortaleza, CE" },
+            { date: "22 MAIO 2026", place: "Teatro Municipal - São Paulo, SP" },
+            { date: "10 JUNHO 2026", place: "Arena da Amazônia - Manaus, AM" }
+        ];
+
+        // Função para adicionar shows
+        function addShow() {
+            const date = prompt("Data do show (ex: 25 JULHO 2026):");
+            const place = prompt("Local do show (ex: Estádio Nacional - Brasília, DF):");
+            if (date && place) {
+                agenda.push({ date, place });
+                renderAgenda();
+            }
+        }
+
+        // Função para renderizar agenda
+        function renderAgenda() {
+            const list = document.getElementById('agenda-list');
+            list.innerHTML = '';
+            agenda.forEach(show => {
+                const div = document.createElement('div');
+                div.className = 'agenda-item';
+                div.innerHTML = `<span class="agenda-date">${show.date}</span> ${show.place}`;
+                list.appendChild(div);
+            });
+        }
+
+        // Função para newsletter
+        function subscribe() {
+            const email = document.getElementById('email').value;
+            if (email) {
+                alert('Obrigado por se cadastrar! Você receberá nossas novidades em breve.');
+                document.getElementById('email').value = '';
+            } else {
+                alert('Por favor, insira um e-mail válido.');
+            }
+        }
+
+        // Observador de interseção para animações
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        // Inicializar observador nas seções
+        document.querySelectorAll('.section-container').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Menu toggle para mobile
+        const menuToggle = document.getElementById('menuToggle');
+        const sidebar = document.getElementById('sidebar');
+
+        if (window.innerWidth <= 1200) {
+            menuToggle.style.display = 'block';
+            sidebar.classList.remove('open');
+        }
+
+        menuToggle.addEventListener('click', () => {
+            sidebar.classList.toggle('open');
+        });
+
+        // Atualizar barra de progresso da música
+        function updateProgress() {
+            const progress = document.querySelector('.progress');
+            let width = 40;
+            const interval = setInterval(() => {
+                width += 0.5;
+                if (width >= 100) width = 0;
+                progress.style.width = width + '%';
+            }, 500);
+        }
+
+        // Inicializar
+        document.addEventListener('DOMContentLoaded', () => {
+            renderAgenda();
+            updateProgress();
+
+            // Adicionar classe ativa ao nav
+            const navLinks = document.querySelectorAll('.sidebar-nav a');
+            navLinks.forEach(link => {
+                link.addEventListener('click', function () {
+                    navLinks.forEach(l => l.classList.remove('active'));
+                    this.classList.add('active');
+
+                    // Fechar menu no mobile após clicar
+                    if (window.innerWidth <= 1200) {
+                        sidebar.classList.remove('open');
+                    }
+                });
+            });
+
+            // Verificar largura da tela e ajustar menu
+            window.addEventListener('resize', () => {
+                if (window.innerWidth <= 1200) {
+                    menuToggle.style.display = 'block';
+                    sidebar.classList.remove('open');
+                } else {
+                    menuToggle.style.display = 'none';
+                    sidebar.classList.add('open');
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
